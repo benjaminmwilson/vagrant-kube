@@ -16,3 +16,19 @@ See <https://docs.giantswarm.io/guides/install-kubernetes-dashboard/>
 
 
 
+    3  kubectl apply -f https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')
+    4  kubectl taint nodes --all node-role.kubernetes.io/master-
+    5  cat /etc/kubernetes/admin.conf
+    6  sudo cat /etc/kubernetes/admin.conf
+    7  exit
+    8  ping 10.32.0.5
+    9  curl
+   10  curl http://10.32.0.5
+   11  kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended/kubernetes-dashboard.yaml
+
+9167  kubectl create serviceaccount cluster-admin-dashboard-sa
+ 9168  kubectl create clusterrolebinding cluster-admin-dashboard-sa   --clusterrole=cluster-admin \
+ 9169  kubectl create clusterrolebinding cluster-admin-dashboard-sa --clusterrole=cluster-admin --serviceaccount=default:cluster-admin-dashboard-sa
+ 9170  kubectl get secret | grep cluster-admin-dashboard-sa
+ 9171  kubectl describe secret cluster-admin-dashboard-sa-token-ncfk4
+ 9172  kubectl proxy
