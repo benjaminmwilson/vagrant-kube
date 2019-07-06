@@ -1,5 +1,10 @@
 #!/bin/sh
 
+IPADDR=`ifconfig eth1 | grep -i Mask | awk '{print $2}'| cut -f2 -d:`
+sudo cat /etc/kubernetes/admin.conf|sed -E "s/(server: https:\/\/).+(:.+)$/\1$IPADDR\2/" > /vagrant/config
+echo "kubectl config copied to config file; add this to ~/.kube/config or run kubectl --kubeconfig config get nodes"
+
+
 STATUS=""
 while [ "$STATUS" != "NotReady" ]
 do
@@ -33,13 +38,7 @@ kubectl create clusterrolebinding cluster-admin-dashboard-sa --clusterrole=clust
 
 kubectl describe secret `kubectl get secret | grep cluster-admin-dashboard-sa|awk '{ print $1; }'`|grep -E 'token:' > /vagrant/token
 echo "Kubernetes dashboard installed. To access run kubectl proxy and navigate to http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/"
+echo "It can take a few minutes before dashboard is available (you might get HTTP 503 at first)"
 echo "Use token in /vagrant/token:"
 cat /vagrant/token
 echo "Setup complete."
-
-# TODO
-# Instruction for kubectl running on any host on the network
-# Replace IP in config with actual network IP
-# One step setup
-
-

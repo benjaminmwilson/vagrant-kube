@@ -37,8 +37,6 @@ sudo --user=vagrant mkdir -p /home/vagrant/.kube
 cp -i /etc/kubernetes/admin.conf /home/vagrant/.kube/config
 chown $(id -u vagrant):$(id -g vagrant) /home/vagrant/.kube/config
 
-cp /etc/kubernetes/admin.conf /vagrant/config
-echo "kubectl config copied to config file; add this to ~/.kube/config"
 echo "Run vagrant ssh and execute /vagrant/setup.sh to finish setup"
 
 SCRIPT
